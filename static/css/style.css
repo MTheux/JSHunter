@@ -984,6 +984,32 @@ textarea {
 }
 
 /* AI Badge & Reason */
+/* Spider Mode */
+.btn-spider {
+    background: linear-gradient(135deg, #7c3aed, #dc2626) !important;
+}
+
+.btn-spider:hover {
+    background: linear-gradient(135deg, #6d28d9, #b91c1c) !important;
+}
+
+.spider-info {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    color: var(--text-muted);
+    background: rgba(124, 58, 237, 0.08);
+    border: 1px solid rgba(124, 58, 237, 0.2);
+    border-radius: 2px;
+    padding: 10px 14px;
+    margin-top: 10px;
+    line-height: 1.5;
+}
+
+.spider-info i {
+    color: #7c3aed;
+    margin-right: 6px;
+}
+
 .ai-badge {
     font-family: var(--font-mono);
     font-size: 0.65rem;

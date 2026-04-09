@@ -13,6 +13,7 @@ from jshunter.services.analyzer_service import AnalyzerService
 from jshunter.routes.analysis import analysis_bp, init_analysis
 from jshunter.routes.results import results_bp, init_storage
 from jshunter.routes.health import health_bp
+from jshunter.routes.spider import spider_bp, init_spider
 from jshunter.utils.logger import logger
 
 
@@ -46,11 +47,13 @@ def create_app(env=None):
     # ---- Inject dependencies into blueprints ----
     init_analysis(analysis_storage, service)
     init_storage(analysis_storage)
+    init_spider(analysis_storage, service)
 
     # ---- Register blueprints ----
     app.register_blueprint(analysis_bp)
     app.register_blueprint(results_bp)
     app.register_blueprint(health_bp)
+    app.register_blueprint(spider_bp)
 
     # ---- Root route ----
     @app.route('/')

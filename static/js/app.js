@@ -42,6 +42,12 @@ document.getElementById('analyzeMultipleBtn').addEventListener('click', analyzeM
 document.getElementById('urlFile').addEventListener('change', handleFileSelect);
 document.getElementById('analyzeFileBtn').addEventListener('click', analyzeFile);
 
+// Spider
+document.getElementById('spiderBtn').addEventListener('click', () => startSpider());
+document.getElementById('spiderUrl').addEventListener('keypress', (e) => {
+    if (e.key === 'Enter') startSpider();
+});
+
 // Back to files
 document.getElementById('backToFiles').addEventListener('click', () => {
     document.getElementById('results').classList.add('hidden');
@@ -148,6 +154,81 @@ async function analyzeFile() {
     const formData = new FormData();
     formData.append('file', file);
     await analyzeUrls(null, formData);
+}
+
+async function startSpider() {
+    const url = document.getElementById('spiderUrl').value.trim();
+    if (!url) {
+        showError('Insira a URL do site alvo');
+        return;
+    }
+    try { new URL(url); } catch (e) {
+        showError('URL invalida');
+        return;
+    }
+
+    const loading = document.getElementById('loading');
+    const loadingText = document.getElementById('loading-text');
+    const error = document.getElementById('error');
+    const results = document.getElementById('results');
+    const filesSection = document.getElementById('files-section');
+
+    error.classList.add('hidden');
+    results.classList.add('hidden');
+    filesSection.classList.add('hidden');
+    loading.classList.remove('hidden');
+    loadingText.textContent = 'Spider ativo — abrindo browser headless e descobrindo JS...';
+
+    try {
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), 600000); // 10 min timeout
+
+        const response = await fetch('/api/spider', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ url }),
+            signal: controller.signal,
+        });
+
+        clearTimeout(timeoutId);
+
+        if (!response.ok) {
+            const errorText = await response.text();
+            let errorMsg = 'Spider falhou';
+            try { errorMsg = JSON.parse(errorText).error || errorMsg; } catch (e) {}
+            throw new Error(errorMsg);
+        }
+
+        const data = await response.json();
+        if (!data || !data.results) throw new Error('Resposta invalida do servidor');
+
+        currentSessionId = data.session_id;
+        allFilesData = data.results;
+
+        // Show spider stats
+        const spiderStats = `Spider: ${data.pages_crawled} paginas crawled, ${data.scripts_found} JS encontrados`;
+        loadingText.textContent = spiderStats;
+
+        if (data.results.length === 0) {
+            showError(`Spider nao encontrou arquivos JS em ${url}`);
+        } else if (data.results.length === 1) {
+            currentResults = data.results[0];
+            displayResults(currentResults);
+            results.classList.remove('hidden');
+        } else {
+            displayFileCards(data.results);
+            filesSection.classList.remove('hidden');
+        }
+
+    } catch (err) {
+        if (err.name === 'AbortError') {
+            showError('Timeout: o spider demorou mais de 10 minutos.');
+        } else {
+            showError(err.message || 'Spider falhou');
+        }
+    } finally {
+        loading.classList.add('hidden');
+    }
 }
 
 async function analyzeUrls(urls, formData = null) {

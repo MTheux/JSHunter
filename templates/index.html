@@ -93,6 +93,9 @@
                 <button class="tab-btn" data-tab="file">
                     <i class="fas fa-file-upload"></i> Upload
                 </button>
+                <button class="tab-btn" data-tab="spider">
+                    <i class="fas fa-spider"></i> Spider
+                </button>
                 <button id="clearAllBtn" class="tab-btn clear-btn">
                     <i class="fas fa-trash-alt"></i> Limpar
                 </button>
@@ -127,6 +130,19 @@
                     <button id="analyzeFileBtn" class="btn-hunt" disabled>
                         <i class="fas fa-crosshairs"></i> HUNT FILE
                     </button>
+                </div>
+            </div>
+
+            <div id="spider-tab" class="tab-content hidden">
+                <div class="input-group">
+                    <input type="text" id="spiderUrl" placeholder="https://target.com (URL do site, nao do .js)" />
+                    <button id="spiderBtn" class="btn-hunt btn-spider">
+                        <i class="fas fa-spider"></i> SPIDER
+                    </button>
+                </div>
+                <div class="spider-info">
+                    <i class="fas fa-info-circle"></i>
+                    Abre o site num browser headless, descobre todos os .js automaticamente (incluindo chunks dinamicos), segue links internos e analisa tudo com os 3 motores.
                 </div>
             </div>
 
