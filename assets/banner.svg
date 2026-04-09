@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="500" viewBox="0 0 800 500">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#0a0a0a"/>
+      <stop offset="100%" style="stop-color:#111111"/>
+    </linearGradient>
+    <linearGradient id="redGlow" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#dc2626"/>
+      <stop offset="100%" style="stop-color:#b91c1c"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="800" height="500" fill="url(#bg)"/>
+
+  <!-- Top red bar -->
+  <rect x="50" y="30" width="700" height="35" rx="2" fill="none" stroke="#dc2626" stroke-width="1.5"/>
+  <text x="400" y="53" text-anchor="middle" fill="#dc2626" font-family="monospace" font-size="13" font-weight="bold" letter-spacing="4">[ JAVASCRIPT SECURITY ARSENAL ]</text>
+
+  <!-- Main title -->
+  <text x="400" y="150" text-anchor="middle" fill="#ffffff" font-family="Arial Black, sans-serif" font-size="72" font-weight="900" letter-spacing="6">JS</text>
+  <text x="400" y="230" text-anchor="middle" fill="#dc2626" font-family="Arial Black, sans-serif" font-size="80" font-weight="900" letter-spacing="4">HUNTER</text>
+
+  <!-- Version -->
+  <text x="400" y="260" text-anchor="middle" fill="#666666" font-family="monospace" font-size="14">v2.0 — PYTHON</text>
+
+  <!-- Subtitle -->
+  <text x="400" y="295" text-anchor="middle" fill="#dc2626" font-family="monospace" font-size="12" font-weight="bold" letter-spacing="2">API KEYS. CREDENTIALS. XSS. ENDPOINTS. ENTROPY.</text>
+
+  <!-- Detection types -->
+  <text x="400" y="318" text-anchor="middle" fill="#555555" font-family="monospace" font-size="11" letter-spacing="3">AST  •  REGEX  •  AI CLASSIFICATION  •  GROQ/LLAMA</text>
+
+  <!-- Feature boxes -->
+  <!-- Box 1 -->
+  <rect x="80" y="345" width="190" height="65" rx="2" fill="none" stroke="#dc2626" stroke-width="1"/>
+  <text x="175" y="367" text-anchor="middle" fill="#dc2626" font-family="monospace" font-size="12" font-weight="bold">3-ENGINE PIPELINE</text>
+  <text x="175" y="385" text-anchor="middle" fill="#888888" font-family="monospace" font-size="9">Fetcher • Extractor</text>
+  <text x="175" y="400" text-anchor="middle" fill="#888888" font-family="monospace" font-size="9">AI Classifier</text>
+
+  <!-- Box 2 -->
+  <rect x="305" y="345" width="190" height="65" rx="2" fill="none" stroke="#dc2626" stroke-width="1"/>
+  <text x="400" y="367" text-anchor="middle" fill="#dc2626" font-family="monospace" font-size="12" font-weight="bold">50+ DETECTIONS</text>
+  <text x="400" y="385" text-anchor="middle" fill="#888888" font-family="monospace" font-size="9">API Keys • Credentials</text>
+  <text x="400" y="400" text-anchor="middle" fill="#888888" font-family="monospace" font-size="9">XSS • SSRF • Secrets</text>
+
+  <!-- Box 3 -->
+  <rect x="530" y="345" width="190" height="65" rx="2" fill="none" stroke="#dc2626" stroke-width="1"/>
+  <text x="625" y="367" text-anchor="middle" fill="#dc2626" font-family="monospace" font-size="12" font-weight="bold">AI POWERED</text>
+  <text x="625" y="385" text-anchor="middle" fill="#888888" font-family="monospace" font-size="9">Groq • Llama 3.3 70B</text>
+  <text x="625" y="400" text-anchor="middle" fill="#888888" font-family="monospace" font-size="9">False Positive Removal</text>
+
+  <!-- Tags -->
+  <text x="400" y="440" text-anchor="middle" fill="#555555" font-family="monospace" font-size="11" letter-spacing="2">[PYTHON]    [MIT]    [BUG BOUNTY]    [@HUNTBOX]</text>
+
+  <!-- Bottom red bar -->
+  <rect x="0" y="460" width="800" height="40" fill="#dc2626"/>
+  <text x="400" y="485" text-anchor="middle" fill="#ffffff" font-family="monospace" font-size="14" font-weight="bold" letter-spacing="3">DEVELOPED BY HUNTBOX — 100% OFFENSIVE</text>
+</svg>

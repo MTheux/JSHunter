@@ -3,45 +3,115 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>JS-Sentinel - Security Analyzer</title>
+    <title>JSHunter — HuntBox</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 </head>
 <body>
+    <div class="scanline"></div>
+
     <div class="container">
+        <!-- HEADER -->
         <header>
-            <h1><i class="fas fa-shield-alt"></i> JS-Sentinel</h1>
-            <p class="subtitle">Análise avançada de arquivos JavaScript para detecção de vulnerabilidades e dados sensíveis</p>
-            <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 10px;">
-                <i class="fas fa-server"></i> Desenvolvido por <strong>mftheux</strong>
+            <div class="header-badge">HUNTBOX // ARSENAL</div>
+            <h1>
+                <span class="logo-js">JS</span><span class="logo-hunter">HUNTER</span>
+            </h1>
+            <p class="subtitle">Advanced JavaScript Security Analysis Engine</p>
+            <p class="subtitle-desc">
+                Motor hibrido AST + Regex para deteccao de vulnerabilidades,
+                segredos expostos e reconhecimento de superficie de ataque em arquivos JavaScript.
             </p>
+            <div class="header-tags">
+                <span class="htag"><i class="fas fa-crosshairs"></i> Pentest</span>
+                <span class="htag"><i class="fas fa-skull"></i> Red Team</span>
+                <span class="htag"><i class="fas fa-bug"></i> Bug Bounty</span>
+            </div>
         </header>
 
+        <!-- CAPABILITIES -->
+        <div class="capabilities">
+            <div class="cap-card">
+                <div class="cap-icon"><i class="fas fa-key"></i></div>
+                <div class="cap-title">HUNTING DE CREDENCIAIS</div>
+                <div class="cap-desc">50+ padroes de API keys, tokens, segredos hardcoded com validacao por entropia Shannon</div>
+            </div>
+            <div class="cap-card">
+                <div class="cap-icon"><i class="fas fa-code"></i></div>
+                <div class="cap-title">DEEP SCAN AST</div>
+                <div class="cap-desc">Analise sintatica com Esprima para deteccao contextual de XSS, prototype pollution e sinks</div>
+            </div>
+            <div class="cap-card">
+                <div class="cap-icon"><i class="fas fa-route"></i></div>
+                <div class="cap-title">RECON DE ENDPOINTS</div>
+                <div class="cap-desc">Extracao de rotas API, URLs internas, parametros, WebSockets e GraphQL endpoints</div>
+            </div>
+            <div class="cap-card">
+                <div class="cap-icon"><i class="fas fa-map"></i></div>
+                <div class="cap-title">SOURCE MAP FINDER</div>
+                <div class="cap-desc">Deteccao de source maps expostos com link direto para reconstrucao do codigo original</div>
+            </div>
+        </div>
+
+        <!-- WORKFLOW PIPELINE -->
+        <div class="pipeline">
+            <div class="pipeline-label">WORKFLOW DE ANALISE</div>
+            <div class="pipeline-steps">
+                <div class="pipe-step">
+                    <span class="pipe-num">01</span>
+                    <span class="pipe-text">FETCH / UPLOAD</span>
+                </div>
+                <div class="pipe-arrow"><i class="fas fa-chevron-right"></i></div>
+                <div class="pipe-step">
+                    <span class="pipe-num">02</span>
+                    <span class="pipe-text">AST PARSING</span>
+                </div>
+                <div class="pipe-arrow"><i class="fas fa-chevron-right"></i></div>
+                <div class="pipe-step">
+                    <span class="pipe-num">03</span>
+                    <span class="pipe-text">REGEX ENGINE</span>
+                </div>
+                <div class="pipe-arrow"><i class="fas fa-chevron-right"></i></div>
+                <div class="pipe-step active">
+                    <span class="pipe-num">04</span>
+                    <span class="pipe-text">SECURITY REPORT</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- INPUT SECTION -->
         <div class="input-section">
+            <div class="section-label">TARGET INPUT</div>
             <div class="input-tabs">
-                <button class="tab-btn active" data-tab="single">URL Única</button>
-                <button class="tab-btn" data-tab="multiple">Múltiplas URLs</button>
-                <button class="tab-btn" data-tab="file">Upload de Arquivo</button>
-                
-                <button id="clearAllBtn" class="tab-btn" style="margin-left: auto; color: var(--danger);">
-                    <i class="fas fa-trash-alt"></i> Limpar Tudo
+                <button class="tab-btn active" data-tab="single">
+                    <i class="fas fa-crosshairs"></i> URL Unica
+                </button>
+                <button class="tab-btn" data-tab="multiple">
+                    <i class="fas fa-list"></i> Multiplas URLs
+                </button>
+                <button class="tab-btn" data-tab="file">
+                    <i class="fas fa-file-upload"></i> Upload
+                </button>
+                <button id="clearAllBtn" class="tab-btn clear-btn">
+                    <i class="fas fa-trash-alt"></i> Limpar
                 </button>
             </div>
 
             <div id="single-tab" class="tab-content active">
                 <div class="input-group">
-                    <input type="text" id="jsUrl" placeholder="Digite a URL do arquivo JavaScript (ex: https://example.com/app.js)" />
-                    <button id="analyzeBtn" class="btn-primary">
-                        <i class="fas fa-search"></i> Analisar
+                    <input type="text" id="jsUrl" placeholder="https://target.com/static/js/app.js" />
+                    <button id="analyzeBtn" class="btn-hunt">
+                        <i class="fas fa-crosshairs"></i> HUNT
                     </button>
                 </div>
             </div>
 
             <div id="multiple-tab" class="tab-content hidden">
                 <div class="input-group-vertical">
-                    <textarea id="multipleUrls" placeholder="Digite múltiplas URLs, uma por linha&#10;Exemplo:&#10;https://example.com/app.js&#10;https://example.com/lib.js" rows="6"></textarea>
-                    <button id="analyzeMultipleBtn" class="btn-primary">
-                        <i class="fas fa-search"></i> Analisar Todas
+                    <textarea id="multipleUrls" placeholder="Cole multiplas URLs, uma por linha&#10;&#10;https://target.com/static/js/app.js&#10;https://target.com/static/js/vendor.js&#10;https://target.com/static/js/chunk.js" rows="6"></textarea>
+                    <button id="analyzeMultipleBtn" class="btn-hunt">
+                        <i class="fas fa-crosshairs"></i> HUNT ALL
                     </button>
                 </div>
             </div>
@@ -49,61 +119,112 @@
             <div id="file-tab" class="tab-content hidden">
                 <div class="input-group-vertical">
                     <label for="urlFile" class="file-label">
-                        <i class="fas fa-upload"></i> Escolha um arquivo (.txt, .csv, .json)
-                        <input type="file" id="urlFile" accept=".txt,.csv,.json" style="display: none;" />
+                        <i class="fas fa-upload"></i> Arraste ou clique para selecionar
+                        <span class="file-hint">.js .txt .csv .json .html</span>
+                        <input type="file" id="urlFile" accept=".txt,.csv,.json,.js,.html,.htm" style="display: none;" />
                     </label>
                     <div id="fileName" class="file-name hidden"></div>
-                    <button id="analyzeFileBtn" class="btn-primary" disabled>
-                        <i class="fas fa-search"></i> Analisar Arquivo
+                    <button id="analyzeFileBtn" class="btn-hunt" disabled>
+                        <i class="fas fa-crosshairs"></i> HUNT FILE
                     </button>
                 </div>
             </div>
 
-            <div style="margin-top: 10px; font-size: 0.85rem; color: var(--text-muted);">
-                <i class="fas fa-info-circle"></i> Para arquivos locais, use <code>localhost</code> ou <code>127.0.0.1</code>
-            </div>
-            
-            <div id="loading" class="loading hidden" style="background: rgba(99, 102, 241, 0.1); padding: 15px; border-radius: 8px; margin-top: 20px; border: 1px solid var(--primary);">
-                <i class="fas fa-spinner fa-spin fa-lg"></i> 
-                <span id="loading-text" style="font-weight: bold; margin-left: 10px;">Iniciando análise... aguarde</span>
+            <div id="loading" class="loading hidden">
+                <div class="loading-bar">
+                    <div class="loading-progress"></div>
+                </div>
+                <div class="loading-text">
+                    <i class="fas fa-terminal"></i>
+                    <span id="loading-text">Iniciando analise...</span>
+                </div>
             </div>
         </div>
 
+        <!-- ERROR -->
         <div id="error" class="error hidden"></div>
 
+        <!-- FILES SECTION (multi) -->
         <div id="files-section" class="files-section hidden">
-            <h2>Arquivos Analisados</h2>
+            <div class="section-label">TARGETS ANALISADOS</div>
             <div id="files-grid" class="files-grid"></div>
         </div>
 
+        <!-- RESULTS -->
         <div id="results" class="results hidden">
             <div class="results-header">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
-                    <h2 id="results-title">Resultados da Análise</h2>
-                    <button id="backToFiles" class="btn-secondary hidden">
-                        <i class="fas fa-arrow-left"></i> Voltar para Arquivos
-                    </button>
+                <div class="results-top">
+                    <div>
+                        <div class="section-label">SECURITY FINDINGS</div>
+                        <h2 id="results-title">Resultados da Analise</h2>
+                    </div>
+                    <div class="results-actions">
+                        <button id="exportBtn" class="btn-export" title="Exportar JSON">
+                            <i class="fas fa-download"></i> EXPORT
+                        </button>
+                        <button id="backToFiles" class="btn-back hidden">
+                            <i class="fas fa-arrow-left"></i> Voltar
+                        </button>
+                    </div>
                 </div>
+
+                <!-- RISK SCORE -->
+                <div id="risk-score-section" class="risk-score-section">
+                    <div class="risk-gauge">
+                        <div class="risk-circle" id="risk-circle">
+                            <span class="risk-value" id="risk-value">0</span>
+                        </div>
+                        <div class="risk-label">RISK SCORE</div>
+                    </div>
+                    <div class="severity-dashboard">
+                        <div class="sev-card critical">
+                            <span class="sev-count" id="sev-critical">0</span>
+                            <span class="sev-label">CRITICAL</span>
+                        </div>
+                        <div class="sev-card high">
+                            <span class="sev-count" id="sev-high">0</span>
+                            <span class="sev-label">HIGH</span>
+                        </div>
+                        <div class="sev-card medium">
+                            <span class="sev-count" id="sev-medium">0</span>
+                            <span class="sev-label">MEDIUM</span>
+                        </div>
+                        <div class="sev-card low">
+                            <span class="sev-count" id="sev-low">0</span>
+                            <span class="sev-label">LOW</span>
+                        </div>
+                        <div class="sev-card info-card">
+                            <span class="sev-count" id="sev-info">0</span>
+                            <span class="sev-label">INFO</span>
+                        </div>
+                    </div>
+                    <div class="engine-badge" id="engine-badge">
+                        <i class="fas fa-microchip"></i> ENGINE: <strong>—</strong>
+                    </div>
+                </div>
+
+                <!-- FILTERS -->
                 <div class="filters">
                     <button class="filter-btn active" data-filter="all">Tudo</button>
-                    <button class="filter-btn" data-filter="api_keys">Chaves API</button>
+                    <button class="filter-btn" data-filter="api_keys">API Keys</button>
                     <button class="filter-btn" data-filter="credentials">Credenciais</button>
-                    <button class="filter-btn" data-filter="high_entropy_strings">Alta Entropia</button>
+                    <button class="filter-btn" data-filter="high_entropy_strings">Entropia</button>
                     <button class="filter-btn" data-filter="emails">Emails</button>
-                    <button class="filter-btn" data-filter="xss">Vulnerabilidades XSS</button>
-                    <button class="filter-btn" data-filter="api_endpoints">Endpoints API</button>
-                    <button class="filter-btn" data-filter="parameters">Parâmetros</button>
-                    <button class="filter-btn" data-filter="paths">Caminhos</button>
-                    <button class="filter-btn" data-filter="comments">Comentários</button>
+                    <button class="filter-btn" data-filter="xss">XSS / Vulns</button>
+                    <button class="filter-btn" data-filter="api_endpoints">Endpoints</button>
+                    <button class="filter-btn" data-filter="parameters">Parametros</button>
+                    <button class="filter-btn" data-filter="paths">Paths</button>
+                    <button class="filter-btn" data-filter="comments">Comentarios</button>
                 </div>
             </div>
 
+            <!-- STATS CARDS -->
             <div class="summary">
                 <div class="stat-card">
                     <i class="fas fa-key"></i>
                     <div>
                         <span class="stat-value" id="stat-api-keys">0</span>
-                        <span class="stat-label">Chaves API</span>
+                        <span class="stat-label">API Keys</span>
                     </div>
                 </div>
                 <div class="stat-card">
@@ -117,7 +238,7 @@
                     <i class="fas fa-random"></i>
                     <div>
                         <span class="stat-value" id="stat-entropy">0</span>
-                        <span class="stat-label">Alta Entropia</span>
+                        <span class="stat-label">Entropia</span>
                     </div>
                 </div>
                 <div class="stat-card">
@@ -134,7 +255,7 @@
                         <span class="stat-label">XSS/Vulns</span>
                     </div>
                 </div>
-                 <div class="stat-card">
+                <div class="stat-card">
                     <i class="fas fa-code-branch"></i>
                     <div>
                         <span class="stat-value" id="stat-endpoints">0</span>
@@ -143,24 +264,34 @@
                 </div>
             </div>
 
+            <!-- FINDINGS -->
             <div class="findings-container">
                 <div id="findings-content"></div>
             </div>
         </div>
-        
-        <footer style="text-align: center; margin-top: 60px; padding: 30px 0; border-top: 1px solid var(--border); color: var(--text-muted);">
-            <p style="margin-bottom: 15px;">
-                <strong>JS-Sentinel</strong> desenvolvido por <span style="color: var(--primary); font-weight: bold;">mftheux</span>
-            </p>
-            <p style="margin-top: 20px; font-size: 0.85rem;">
-                Ferramenta para uso exclusivo em testes de segurança autorizados.
-            </p>
+
+        <!-- FOOTER -->
+        <footer>
+            <div class="footer-brand">
+                <span class="footer-logo"><span class="logo-js">JS</span><span class="logo-hunter">HUNTER</span></span>
+                <span class="footer-sep">|</span>
+                <span class="footer-huntbox">Desenvolvido por <strong>HuntBox</strong></span>
+            </div>
+            <div class="footer-tagline">
+                Empresa 100% ofensiva &mdash; Pentest &bull; Red Team &bull; Bug Bounty
+            </div>
+            <div class="footer-disclaimer">
+                Ferramenta para uso exclusivo em testes de seguranca autorizados.
+            </div>
+            <div class="footer-stack">
+                <span class="stack-tag">PYTHON</span>
+                <span class="stack-tag">AST ENGINE</span>
+                <span class="stack-tag">REGEX ENGINE</span>
+                <span class="stack-tag">FLASK</span>
+            </div>
         </footer>
     </div>
 
     <script src="{{ url_for('static', filename='js/app.js') }}"></script>
-    <script>
-        // Correção aplicada diretamente no app.js, não é mais necessário sobrescrever aqui
-    </script>
 </body>
 </html>

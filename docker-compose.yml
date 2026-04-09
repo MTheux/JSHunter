@@ -1,0 +1,13 @@
+version: '3.8'
+
+services:
+  jshunter:
+    build: .
+    container_name: jshunter
+    ports:
+      - "5000:5000"
+    env_file:
+      - .env
+    environment:
+      - JSHUNTER_ENV=production
+    restart: unless-stopped

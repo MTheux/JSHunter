@@ -1,0 +1,12 @@
+.git
+.env
+__pycache__
+*.pyc
+*.pyo
+.vscode
+.idea
+node_modules
+docs/plans
+test.js
+test_layer1.js
+analyzer.py
