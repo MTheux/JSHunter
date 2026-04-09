@@ -5,9 +5,12 @@ LABEL description="JSHunter — Advanced JavaScript Security Analyzer"
 
 WORKDIR /app
 
-# Install dependencies
+# Install Python dependencies first
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
+
+# Install Playwright with all system deps
+RUN playwright install --with-deps chromium
 
 # Copy application
 COPY . .

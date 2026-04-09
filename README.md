@@ -51,6 +51,55 @@ URL ──▶ [ Motor 1: Fetcher ] ──▶ [ Motor 2: Extractor ] ──▶ [ 
 | **Emails** | Enderecos de email expostos no codigo | Regex |
 | **Source Maps** | `.map` files que expoe codigo fonte original | Detection |
 
+## Spider Mode
+
+O Spider Mode transforma o JSHunter num crawler automatico de JavaScript. Em vez de informar URLs de arquivos `.js` manualmente, voce cola a **URL do site** e ele descobre tudo sozinho.
+
+```
+https://target.com ──▶ Playwright (Chromium headless)
+                            │
+                       Intercepta TODAS as requests .js via rede
+                            │
+                       Segue links internos (1 nivel, max 15 paginas)
+                            │
+                       Filtra lixo (libs conhecidas, tracking, min/max size)
+                            │
+                       Deduplica por URL
+                            │
+                       Motor 2 (Extractor) + Motor 3 (AI) em cada JS
+                            │
+                       Relatorio unificado
+```
+
+### Como funciona
+
+- Abre um **browser real** (Chromium) em modo headless — nao usa regex pra adivinhar, pega o que o browser **realmente carrega**
+- Intercepta requests de rede (`content-type: javascript`) — pega scripts dinamicos, webpack chunks, lazy imports
+- Filtra por **same-origin + subdominios** (ex: `*.target.com`) — ignora CDNs externas
+- Ignora **libs conhecidas** (jQuery, React, Angular, Bootstrap, analytics, recaptcha...)
+- Filtra por tamanho: ignora < 500 bytes (tracking pixels) e > 20MB
+
+### Filtros anti-lixo
+
+| Filtro | Motivo |
+|--------|--------|
+| Network interception | So pega JS que o browser realmente carrega |
+| Content-type check | Ignora HTML/CSS/imagens |
+| Same-origin + subdomains | Foca no codigo do alvo |
+| Known libs fingerprint | Pula jQuery, React, Angular etc |
+| Min 500 bytes | Ignora tracking pixels |
+| Max 20MB | Ignora bundles impossiveis |
+| Dedup por URL | Mesmo script nao roda 2x |
+
+### Uso
+
+Na interface web, clique na aba **Spider**, cole a URL do site (nao do `.js`) e clique em **SPIDER**.
+
+```
+POST /api/spider
+{ "url": "https://target.com" }
+```
+
 ## Quick Start
 
 ### Requisitos
@@ -62,11 +111,14 @@ URL ──▶ [ Motor 1: Fetcher ] ──▶ [ Motor 2: Extractor ] ──▶ [ 
 
 ```bash
 # Clone
-git clone https://github.com/MTheux/JS-Sentinel.git
-cd JS-Sentinel
+git clone https://github.com/MTheux/JSHunter.git
+cd JSHunter
 
 # Instale dependencias
 pip install -r requirements.txt
+
+# Instale o Chromium para o Spider Mode
+playwright install chromium
 
 # Configure a API key do Groq
 cp .env.example .env
@@ -127,6 +179,7 @@ jshunter/
 │   ├── extractor.py        # Motor 2 — AST + Regex + Entropy
 │   ├── ai_classifier.py    # Motor 3 — Groq/Llama AI
 │   ├── analyzer.py         # Orchestrator dos 3 motores
+│   ├── spider.py           # Spider Mode (Playwright/Chromium)
 │   ├── ast_visitor.py      # Visitor AST (Esprima)
 │   ├── entropy.py          # Shannon Entropy
 │   └── patterns.py         # 50+ regex patterns
@@ -135,6 +188,7 @@ jshunter/
 │   └── file_fetcher.py     # HTTP client com retry
 ├── routes/
 │   ├── analysis.py         # POST /api/analyze
+│   ├── spider.py           # POST /api/spider
 │   ├── results.py          # GET /api/results
 │   └── health.py           # GET /api/health
 ├── models/
@@ -153,6 +207,25 @@ jshunter/
 ```json
 {
   "urls": ["https://target.com/app.js"]
+}
+```
+
+### `POST /api/spider`
+
+```json
+{
+  "url": "https://target.com"
+}
+```
+
+Resposta:
+```json
+{
+  "session_id": "...",
+  "pages_crawled": 8,
+  "scripts_found": 23,
+  "total_files": 23,
+  "results": [...]
 }
 ```
 
@@ -182,6 +255,7 @@ jshunter/
 
 - **Backend:** Python, Flask, Esprima (AST)
 - **AI:** Groq Cloud, Llama 3.3 70B Versatile
+- **Spider:** Playwright, Chromium (headless browser)
 - **Frontend:** Vanilla JS, CSS Grid, Font Awesome
 - **Deploy:** Docker, docker-compose
 

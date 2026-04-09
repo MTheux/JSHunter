@@ -9,5 +9,5 @@ services:
     env_file:
       - .env
     environment:
-      - JSHUNTER_ENV=production
+      - JSHUNTER_ENV=development
     restart: unless-stopped
